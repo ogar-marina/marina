@@ -4,24 +4,28 @@ fun main(){
     val lastName: String = "Огарь"
     println(lastName)
 
-    val height: Int = 156
-    val height2: String = "см"
-    val myHeight: String = "Мой рост: $height $height2"
-    println(myHeight)
+    var height: Int = 156
+    println(height)
 
     val weight = 48.5F
-    val weight2: String = "кг"
-    val myWeight: String = "Мой вес: $weight $weight2"
-    println(myWeight)
+    println(weight)
 
-    val isChild: Any = if((height > 150) && (weight>40))
-        "Взрослый" else
-        "Ребенок"
-    val me: String = "Мой статус: $isChild"
-    println(me)
+    var isChild: Boolean = ((height>150)&&(weight>40))
+        var yes: String = "Adult"
+        var no: String = "Child"
+        println(isChild)
 
-val info: String = "Информация обо мне: $firstName $lastName; $myHeight; $myWeight; $me. "
+var info: String = "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
     println(info)
 
+ height = 168
+    info= "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
+    println(info)
 
+    isChild= ((height>160)&&(weight>50))
+    yes = "Adult"
+    no = "Child"
+
+    info= "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
+    println(info)
 }
