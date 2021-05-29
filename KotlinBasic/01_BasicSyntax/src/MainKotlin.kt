@@ -10,9 +10,7 @@ fun main(){
     val weight = 48.5F
     println(weight)
 
-    var isChild: Boolean = ((height>150)&&(weight>40))
-        var yes: String = "Adult"
-        var no: String = "Child"
+    var isChild: Boolean = ((height<150)||(weight<40))
         println(isChild)
 
 var info: String = "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
@@ -22,9 +20,7 @@ var info: String = "Информация обо мне: $firstName $lastName; $h
     info= "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
     println(info)
 
-    isChild= ((height>160)&&(weight>50))
-    yes = "Adult"
-    no = "Child"
+    isChild= ((height<160)||(weight<50))
 
     info= "Информация обо мне: $firstName $lastName; $height; $weight; $isChild. "
     println(info)
