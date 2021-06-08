@@ -6,13 +6,18 @@ fun main() {
 
     var accum = 0
     var sum = 0
-    for (i in 1..n!!) {
-        print("Введите чило: ")
-        var z: Int = readLine()?.toIntOrNull() ?: continue
-        if (z > 0) accum += 1
-        sum += z
+    var mainNumber = 0
+    if (n != null) {
+        while (mainNumber < n){
+            print("Введите чило: ")
+            val z: Int = readLine()?.toIntOrNull() ?: continue
+            if (z > 0) accum += 1
+            sum += z
+            if (z!= null){
+                mainNumber++
+            }
+        }
     }
     println("Количество положительных чисел: $accum")
     println("Сумма всех введенных чисел: $sum")
-
 }
