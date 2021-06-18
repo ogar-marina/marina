@@ -7,13 +7,14 @@ fun main(){
     println("$s")
 }
 
-fun numberTel(n: Int) {
+fun numberTel(n: Int): MutableList<String> {
 
     val newNumber = mutableListOf<String>()
-    for (i in 1..n){
+    for (i in 1..n) {
         print("Введите номер телефона: ")
-        val t = newNumber.add(readLine()?.toString()?:0.toString())
-        }
+        val t = readLine()?.toString()?.let { newNumber.add(it) }
+    }
+
     val filteredList = newNumber.filter {it.startsWith(prefix = "+7")}
     println(filteredList)
 
@@ -26,12 +27,13 @@ fun numberTel(n: Int) {
     val phoneBook = mutableMapOf<String,String>()
     for (t in newNumber) {
         print("Введите имя человека с номером телефона $t: ")
-        val p = (readLine()?.toString()?:0.toString())
-        phoneBook[t]= p
+        val p = (readLine()?.toString()?:0)
+        phoneBook[t]= p.toString()
     }
 
 
     for(entry in phoneBook) {
         println("Человек: ${phoneBook[entry.key]}. Номер телефона: ${phoneBook[entry.value]}")
     }
-    }
+    return newNumber
+}
