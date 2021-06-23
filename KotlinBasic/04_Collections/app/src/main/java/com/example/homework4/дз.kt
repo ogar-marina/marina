@@ -5,6 +5,16 @@ fun main(){
     val n:Int= readLine()?.toIntOrNull()?:return
     val s = numberTel(n)
     println("$s")
+
+    val filteredList = numberTel(n).filter {it.startsWith(prefix = "+7")}
+    println(filteredList)
+
+    val listToSet = numberTel(n).toSet()
+    println("Количество уникальных номеров: ${listToSet.size}")
+
+    val lenghtSet= listToSet.sumBy { it.length }
+    println("Сумма: $lenghtSet")
+
 }
 
 fun numberTel(n: Int): MutableList<String> {
@@ -15,22 +25,12 @@ fun numberTel(n: Int): MutableList<String> {
         val t = readLine()?.toString()?.let { newNumber.add(it) }
     }
 
-    val filteredList = newNumber.filter {it.startsWith(prefix = "+7")}
-    println(filteredList)
-
-    val sizeNew = newNumber.size
-    println(sizeNew)
-
-    val sumBy= newNumber.sumBy { it.length }
-    println(sumBy)
-
     val phoneBook = mutableMapOf<String,String>()
     for (t in newNumber) {
         print("Введите имя человека с номером телефона $t: ")
         val p = (readLine()?.toString()?:0)
         phoneBook[t]= p.toString()
     }
-
 
     for(entry in phoneBook) {
         println("Человек: ${phoneBook[entry.key]}. Номер телефона: ${phoneBook[entry.value]}")
