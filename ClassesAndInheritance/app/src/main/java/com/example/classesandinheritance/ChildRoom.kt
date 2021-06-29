@@ -1,5 +1,5 @@
 package com.example.classesandinheritance
 
-class ChildRoom (area:Double=25.0): Room(area) {
+open class ChildRoom (area:Double=25.0): Room() {
 override var title :String = "Детская комната"
     }

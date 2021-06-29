@@ -1,8 +1,8 @@
 package com.example.classesandinheritance
 
-open class Room constructor (
-    val area: Double = 50.0
-    ) {
+open class Room() {
+    
+    private val area: Double = 50.0
     protected open val title: String = "Обычная комната"
 
     fun getDescription():String{

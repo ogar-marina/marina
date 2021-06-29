@@ -9,6 +9,6 @@ fun main(){
         ChildRoom(),
         FreeRoom()
 
-        ).forEach{
+    ).forEach{
         println(it.getDescription())}
 }

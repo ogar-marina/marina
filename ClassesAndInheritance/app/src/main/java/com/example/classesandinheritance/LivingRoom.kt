@@ -1,5 +1,5 @@
 package com.example.classesandinheritance
 
-class LivingRoom (area:Double=20.0): Room(area) {
+open class LivingRoom (area:Double=20.0): Room() {
     override val title: String = "Гостиная"
 }
