@@ -1,8 +1,8 @@
 package com.example.classesandinheritance
 
-open class Room() {
-    
-    private val area: Double = 50.0
+open class Room( area: Double) {
+
+    private val area: Double = area
     protected open val title: String = "Обычная комната"
 
     fun getDescription():String{
