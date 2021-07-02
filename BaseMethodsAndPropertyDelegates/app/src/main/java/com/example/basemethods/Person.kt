@@ -6,10 +6,9 @@ class Person (
     val name: String
         )
 {
-
+    private val pets = hashSetOf<Animal>()
     fun buyPet(){
-    val pets = hashSetOf<Animal>()
-    val animal = Animal(
+        val animal = Animal(
         energy = (0..10).random(),
         weight = (30..100).random(),
         name = (('a'..'z')).random().toString()
