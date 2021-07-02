@@ -6,7 +6,7 @@ fun main() = listOf(
     LivingRoom(area=25.5),
     Bathroom(area=15.2),
     ChildRoom(area=22.4),
-    FreeRoom()
+    FreeRoom(area=30.0)
 
 ).forEach{
     println(it.getDescription())}
