@@ -16,8 +16,7 @@ package com.example.extensionsobjectsenums
          }
 
          override fun moneyInUSD(): Double {
-             val convertInUSD = virtualUSD + virtualEURO*CurrencyConverter.euro+virtualRUB*CurrencyConverter.ruble
-             return convertInUSD
+             return virtualUSD + virtualEURO * CurrencyConverter.euro + virtualRUB * CurrencyConverter.ruble
          }
      }
      class RealWallet():Wallets(){
@@ -27,11 +26,12 @@ package com.example.extensionsobjectsenums
 
          fun addMoney(type:Currency, naminal:Int, quantity: Int){
              when(type){
-                 Currency.RUBLE -> realRUB.put(naminal, quantity)
-                 Currency.DOLLAR -> realUSD.put(naminal, quantity)
-                 Currency.EURO -> realEURO.put(naminal, quantity)
+                 Currency.RUBLE -> realRUB[naminal] = quantity
+                 Currency.DOLLAR -> realUSD[naminal] = quantity
+                 Currency.EURO -> realEURO[naminal] = quantity
              }
          }
+
 
          override fun moneyInUSD(): Double {
              var convertInUSDRUB = 0.0
