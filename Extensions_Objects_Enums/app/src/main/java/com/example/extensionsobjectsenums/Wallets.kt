@@ -2,6 +2,7 @@ package com.example.extensionsobjectsenums
 
  sealed class Wallets {
      abstract fun moneyInUSD(): Double
+
      class VirtualWallet(): Wallets(){
          private var virtualRUB = 0.00
          private var virtualUSD = 0.00
@@ -16,20 +17,23 @@ package com.example.extensionsobjectsenums
          }
 
          override fun moneyInUSD(): Double {
-             return virtualUSD + virtualEURO * CurrencyConverter.euro + virtualRUB * CurrencyConverter.ruble
+             return virtualUSD + virtualEURO * Currency.EURO.ConvertToUSD(moneyInUSD()) + virtualRUB * Currency.RUBLE.ConvertToUSD(moneyInUSD())
          }
      }
+
      class RealWallet():Wallets(){
          var realRUB: MutableMap<Int, Int> = mutableMapOf()
          var realUSD: MutableMap<Int, Int> = mutableMapOf()
          var realEURO: MutableMap<Int, Int> = mutableMapOf()
 
-         fun addMoney(type:Currency, naminal:Int, quantity: Int){
+         fun addMoney(type:Currency, nominal:Int, quantity: Int){
+             var map: MutableMap<Int, Int>
              when(type){
-                 Currency.RUBLE -> realRUB[naminal] = quantity
-                 Currency.DOLLAR -> realUSD[naminal] = quantity
-                 Currency.EURO -> realEURO[naminal] = quantity
+                 Currency.RUBLE -> map = realRUB
+                 Currency.DOLLAR -> map = realUSD
+                 Currency.EURO -> map = realEURO
              }
+             map[nominal] = map[nominal]?: 0 +quantity
          }
 
 

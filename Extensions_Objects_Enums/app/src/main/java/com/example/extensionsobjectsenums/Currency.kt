@@ -18,7 +18,7 @@ object CurrencyConverter {
     const val dollar = 1.0
     const val euro = 1.2
 }
-fun Currency.convertToDollar(money: Double) = when (this){
+fun Currency.ConvertToUSD(money: Double) = when (this){
     Currency.RUBLE -> money* CurrencyConverter.ruble
     Currency.DOLLAR -> money*CurrencyConverter.dollar
     Currency.EURO -> money*CurrencyConverter.euro

@@ -6,7 +6,7 @@ fun main(){
     val europ = Currency.EURO
     val usa = Currency.DOLLAR
 
-    val a = Currency.RUBLE.convertToDollar(money = 150.0)
+    val a = Currency.RUBLE.ConvertToUSD(money = 150.0)
     println(a)
 
     val virtual = Wallets.VirtualWallet()
@@ -16,9 +16,9 @@ fun main(){
     virtual.addMoney(Currency.DOLLAR, quantity = 200.0)
     println("Виртуальный кошелек хранит: ${virtual.moneyInUSD()} $")
 
-    real.addMoney(Currency.RUBLE, naminal = 100, quantity = 100)
-    real.addMoney(Currency.EURO, naminal = 50, quantity = 150)
-    real.addMoney(Currency.DOLLAR, naminal = 20, quantity = 200)
+    real.addMoney(Currency.RUBLE, nominal = 100, quantity = 100)
+    real.addMoney(Currency.EURO, nominal = 50, quantity = 150)
+    real.addMoney(Currency.DOLLAR, nominal = 20, quantity = 200)
     println("Реальный кошелек хранит: ${real.moneyInUSD()} $")
 
     println(virtual)
