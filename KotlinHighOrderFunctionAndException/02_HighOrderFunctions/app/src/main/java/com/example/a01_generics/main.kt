@@ -19,10 +19,12 @@ fun main(){
     val result = queue.filter {it !=("Marina")}
     println(result)
 
-    val result2 = queue.filter2(element = ("M"))
+
+    val result2 = queue.filter(::filter2)
     println(result2)
    }
 
 fun <T:Number> genericFun (list: List<T>): List<T> {
     return list.filter {it.toDouble() %2 == 0.0}
 }
+fun filter2 (element: String): Boolean = element.startsWith("M")

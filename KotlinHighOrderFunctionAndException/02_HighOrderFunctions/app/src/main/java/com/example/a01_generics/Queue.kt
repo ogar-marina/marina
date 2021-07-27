@@ -22,8 +22,6 @@ class Queue<T> {
         return newQueue
     }
 
-    fun filter2 (element: String): Boolean = element.startsWith("M")
-
-}
+    }
 
 
