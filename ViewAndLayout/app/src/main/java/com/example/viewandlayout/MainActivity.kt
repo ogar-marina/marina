@@ -14,26 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val loginButton = findViewById<Button>(R.id.LoginButton)
-        val textEmail = findViewById<EditText>(R.id.textEmail)
-        val textPassword = findViewById<EditText>(R.id.textPassword)
 
-        textEmail.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                loginButton.isEnabled = s?.let{ it.isNotEmpty()}?:false
-            }
-
-        })
-
-        textPassword.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                loginButton.isEnabled = s?.let{ it.isNotEmpty()}?:false
-            }
-
-        })
 
         loginButton.setOnClickListener {
             makeOperation()
