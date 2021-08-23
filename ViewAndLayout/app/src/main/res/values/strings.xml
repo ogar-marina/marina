@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ViewAndLayout</string>
+    <string name="email_hint">Введите адрес эл-почты</string>
+    <string name="password_hint">Введите пароль</string>
+</resources>
