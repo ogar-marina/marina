@@ -1,11 +1,12 @@
 package com.example.viewandlayout
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
+import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,32 +18,50 @@ class MainActivity : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
-            makeOperation()
+            login()
         }
 
     }
 
-    private fun makeOperation(){
-        val longOperationProgress = findViewById<ProgressBar>(R.id.longOperationProgress)
+    @SuppressLint("WrongViewCast")
+    private fun login() {
+        val progressBar = ProgressBar(this)
+        progressBar.layoutParams = LinearLayout.LayoutParams(
+
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val layout = findViewById<RelativeLayout>(R.id.layout)
+
+        layout?.addView(progressBar)
+
+        val button = findViewById<Button>(R.id.LoginButton)
+
+        button?.setOnClickListener {
+
+            progressBar.visibility = View.VISIBLE
+            enable(false)
+
+            Handler().postDelayed({
+                progressBar.visibility = View.GONE
+                enable(true)
+
+                Toast.makeText(this, "Логин прошел успешно!", Toast.LENGTH_SHORT).show()
+            }, 2000)
+
+
+        }
+    }
+    private fun enable(b: Boolean) {
         val loginButton = findViewById<Button>(R.id.LoginButton)
         val checkBoxExample = findViewById<CheckBox>(R.id.checkboxExample)
         val textEmail = findViewById<EditText>(R.id.textEmail)
         val textPassword = findViewById<EditText>(R.id.textPassword)
 
-        longOperationProgress.visibility = View.VISIBLE
-        loginButton.isEnabled = false
-        checkBoxExample.isEnabled = false
-        textEmail.isEnabled = false
-        textPassword.isEnabled = false
-
-        Handler().postDelayed({
-            longOperationProgress.visibility = View.GONE
-            loginButton.isEnabled = true
-            checkBoxExample.isEnabled = true
-            textEmail.isEnabled = true
-            textPassword.isEnabled = true
-
-            Toast.makeText(this, "Логин прошел успешно!", Toast.LENGTH_SHORT).show()
-        }, 2000)
+        loginButton.isEnabled = b
+        checkBoxExample.isEnabled = b
+        textEmail.isEnabled = b
+        textPassword.isEnabled = b
     }
 }

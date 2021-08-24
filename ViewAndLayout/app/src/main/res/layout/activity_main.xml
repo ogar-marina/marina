@@ -61,14 +61,24 @@
         android:text="ВОЙТИ"
         android:layout_gravity="center_horizontal"/>
 
-    <ProgressBar
-        android:id="@+id/longOperationProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_margin="16dp"
-        android:layout_gravity="center_horizontal"
-        android:max="100"
-        android:progress="30"/>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       tools:context=".MainActivity">
+
+       <LinearLayout
+           android:id="@+id/layout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_centerHorizontal="true"
+           android:layout_above="@+id/LoginButton">
+
+
+
+       </LinearLayout>
+
+   </LinearLayout>
 
 </LinearLayout>
