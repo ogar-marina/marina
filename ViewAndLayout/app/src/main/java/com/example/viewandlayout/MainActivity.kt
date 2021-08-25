@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.Gravity
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,22 +25,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("WrongViewCast")
+
     private fun login() {
-        val progressBar = ProgressBar(this)
-        progressBar.layoutParams = LinearLayout.LayoutParams(
 
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        val loginButton = findViewById<Button>(R.id.LoginButton)
+        val container = findViewById<LinearLayout>(R.id.container)
 
-        val layout = findViewById<RelativeLayout>(R.id.layout)
-
-        layout?.addView(progressBar)
-
-        val button = findViewById<Button>(R.id.LoginButton)
-
-        button?.setOnClickListener {
+        loginButton.setOnClickListener {
+            val progressBar = ProgressBar(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                )
+               }
+            container.addView(progressBar)
 
             progressBar.visibility = View.VISIBLE
             enable(false)
@@ -51,8 +51,12 @@ class MainActivity : AppCompatActivity() {
             }, 2000)
 
 
-        }
+         }
+
+
     }
+
+
     private fun enable(b: Boolean) {
         val loginButton = findViewById<Button>(R.id.LoginButton)
         val checkBoxExample = findViewById<CheckBox>(R.id.checkboxExample)
