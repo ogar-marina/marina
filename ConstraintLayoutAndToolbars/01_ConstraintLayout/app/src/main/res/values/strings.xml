@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">01_ConstraintLayout</string>
+    <string name="email_hint">Введите email</string>
+    <string name="password_hint">Введите пароль</string>
+</resources>
