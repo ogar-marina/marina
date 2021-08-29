@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.example.a02_toolbar.databinding.ActivityToolbarBinding
 
-class ToolbarActivity: AppCompatActivity() {
+class ToolbarActivity : AppCompatActivity() {
+
 
     private lateinit var binding: ActivityToolbarBinding
 
@@ -19,7 +20,7 @@ class ToolbarActivity: AppCompatActivity() {
         initToolbar()
     }
 
-    private fun toast(text:String){
+    private fun toast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
@@ -47,18 +48,30 @@ class ToolbarActivity: AppCompatActivity() {
         }
 
         val searchItem = binding.ToolBar.menu.findItem(R.id.action_search)
-        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener{
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-               return true
+                toast("search expanded")
+                return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                toast("search collapsed")
+                return true
+            }
+
+        })
+
+        (searchItem.actionView as SearchView).setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
                 return true
             }
 
         })
 
     }
-
-
 }
