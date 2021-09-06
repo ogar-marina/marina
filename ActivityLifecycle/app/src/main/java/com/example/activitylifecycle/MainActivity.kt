@@ -2,22 +2,23 @@ package com.example.activitylifecycle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.LinearLayout
-import android.widget.ProgressBar
+import android.view.View
+import android.widget.Toast
+import com.example.activitylifecycle.FieldValidators.isStringContainNumber
+import com.example.activitylifecycle.FieldValidators.isStringContainSpecialCharacter
+import com.example.activitylifecycle.FieldValidators.isStringLowerAndUpperCase
+import com.example.activitylifecycle.FieldValidators.isValidEmail
 import com.example.activitylifecycle.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val tag = "MainActivity"
 
     private var state: FormState = FormState(false, "Авторизация прошла успешно!")
-
-    private val validEmail = "marina"
-    private val validPassword = "qwerty"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,62 +27,102 @@ class MainActivity : AppCompatActivity() {
         Log.v(tag, "Main Activity onCreate ${hashCode()}")
 
         if (savedInstanceState != null) {
-            state = savedInstanceState.getParcelable<FormState>("KEY_STRING")
+            state = savedInstanceState.getParcelable("KEY_STRING")
                 ?: error("Unexpected state")
-            updateTextView()
         }
 
-        val newTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                checkIfAllFieldsChecked()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-        }
-        binding.textEmail.addTextChangedListener(newTextWatcher)
-        binding.textPassword.addTextChangedListener(newTextWatcher)
-
-        binding.checkboxExample.setOnCheckedChangeListener { buttonView, isChecked ->
-            checkIfAllFieldsChecked()
-        }
 
         binding.button1.setOnClickListener {
             Thread.sleep(10000)
         }
 
+        setupListeners()
+
         binding.LoginButton.setOnClickListener {
-            login()
-            updateTextView()
+            if (isValidate()) {
+                updateTextView()
+            }
+        }
+
+    }
+
+    private fun isValidate(): Boolean =
+        validateEmail() && validatePassword()
+
+    private fun setupListeners() {
+        binding.textEmail.addTextChangedListener(TextFieldValidation(binding.textEmail))
+        binding.textPassword.addTextChangedListener(TextFieldValidation(binding.textPassword))
+    }
+
+    private fun validateEmail(): Boolean {
+        if (binding.textEmail.text.toString().trim().isEmpty()) {
+            binding.emailTextInputLayout.error = "Required Field!"
+            binding.textEmail.requestFocus()
+            return false
+        } else if (!isValidEmail(binding.textEmail.text.toString())) {
+            binding.emailTextInputLayout.error = "Invalid Email!"
+            binding.textEmail.requestFocus()
+            return false
+        } else {
+            binding.emailTextInputLayout.isErrorEnabled = false
+        }
+        return true
+    }
+
+    private fun validatePassword(): Boolean {
+        if (binding.textPassword.text.toString().trim().isEmpty()) {
+            binding.passwordTextInputLayout.error = "Required Field!"
+            binding.textPassword.requestFocus()
+            return false
+        } else if (binding.textPassword.text.toString().length < 6) {
+            binding.passwordTextInputLayout.error = "password can't be less than 6"
+            binding.textPassword.requestFocus()
+            return false
+        } else if (!isStringContainNumber(binding.textPassword.text.toString())) {
+            binding.passwordTextInputLayout.error = "Required at least 1 digit"
+            binding.textPassword.requestFocus()
+            return false
+        } else if (!isStringLowerAndUpperCase(binding.textPassword.text.toString())) {
+            binding.passwordTextInputLayout.error =
+                "Password must contain upper and lower case letters"
+            binding.textPassword.requestFocus()
+            return false
+        } else if (!isStringContainSpecialCharacter(binding.textPassword.text.toString())) {
+            binding.passwordTextInputLayout.error = "1 special character required"
+            binding.textPassword.requestFocus()
+            return false
+        } else {
+            binding.passwordTextInputLayout.isErrorEnabled = false
+        }
+        return true
+    }
+
+    inner class TextFieldValidation(private val view: View) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            when (view.id) {
+
+                R.id.textEmail -> {
+                    validateEmail()
+                }
+                R.id.textPassword -> {
+                    validatePassword()
+                }
+
+            }
         }
     }
 
-    fun checkIfAllFieldsChecked() {
-        val usernameInput: String = binding.textEmail.text.toString().trim()
-        val passwordInput: String = binding.textPassword.text.toString().trim()
-
-        binding.LoginButton.isEnabled =
-            usernameInput.isNotEmpty() && passwordInput.isNotEmpty() && binding.checkboxExample.isChecked
-    }
-
-    fun EmailAndPasswordValid(): Boolean {
-        return binding.textEmail.text.toString()
-            .trim() == validEmail && binding.textPassword.text.toString().trim() == validPassword
-    }
-
-    private fun updateTextView() {
-        if (EmailAndPasswordValid()) {
+    private fun updateTextView(){
+        if (isValidate()){
             binding.textView2.text = state.message
         } else {
-            binding.textView2.text = "Введите логин и пароль"
+            textView2.text = "Введите почту и пароль"
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable("KEY_STRING", state)
     }
@@ -95,31 +136,4 @@ class MainActivity : AppCompatActivity() {
         private const val KEY_STRING = "String"
     }
 
-    private fun login() {
-        binding.LoginButton.setOnClickListener {
-            val progressBar = ProgressBar(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                )
-            }
-            binding.container.addView(progressBar)
-            enable(false)
-            Handler().postDelayed({
-                binding.container.removeView(progressBar)
-                enable(true)
-            }, 2000)
-        }
-        updateTextView()
-    }
-
-    private fun enable(b: Boolean) {
-
-        binding.LoginButton.isEnabled = b
-        binding.checkboxExample.isEnabled = b
-        binding.textEmail.isEnabled = b
-        binding.textPassword.isEnabled = b
-        binding.checkboxExample.isEnabled = b
-
-    }
 }
