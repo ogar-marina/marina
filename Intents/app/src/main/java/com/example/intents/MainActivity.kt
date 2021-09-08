@@ -10,17 +10,15 @@ import com.example.intents.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    //https://skillbox.ru/course/profession-android-developer-2021/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.LoginButton.setOnClickListener {
-                login()
-            }
+            login()
         }
+    }
 
 
     private fun toSecondActivity() {
@@ -40,31 +38,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValid(){
+    private fun isValid() {
         val email: String = binding.textEmail.text.toString().trim()
         val password: String = binding.textPassword.text.toString().trim()
 
-        if(email.isNullOrBlank() && password.isNullOrBlank()){
+        if (email.isNullOrBlank() && password.isNullOrBlank()) {
             binding.textView2.text = "Заполните поля логина и пароля"
-        } else if (email.isNullOrBlank()){
+        } else if (email.isNullOrBlank()) {
             binding.textView2.text = "Поле логина не заполнено"
         } else if (password.isNullOrBlank()) {
             binding.textView2.text = "Поле пароля не заполнено"
-        }else{
+        } else {
             toSecondActivity()
         }
     }
 
     private fun login() {
-        if(binding.checkboxExample.isChecked){
+        if (binding.checkboxExample.isChecked) {
             isValid()
             toSecondActivity()
-        }else{
+        } else {
             binding.textView2.text = "Не принято соглашение"
         }
     }
-
-
 
     private fun toast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
