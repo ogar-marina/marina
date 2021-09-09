@@ -12,26 +12,22 @@ import com.example.intents.databinding.ActivitySecondBinding
 
 class SecondActivity : AppCompatActivity(R.layout.activity_second) {
     private lateinit var binding: ActivitySecondBinding
-    private val tag = "SecondActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.ResultButton.setOnClickListener {
-            dispatchPhoneCallIntent()
-        }
-
         binding.ButtonPhone.setOnClickListener {
-            Call()
+            dispatchPhoneCallIntent()
         }
     }
 
     private fun dispatchPhoneCallIntent() {
-        val PhoneIntent = Intent(Intent.ACTION_DIAL)
-        PhoneIntent.resolveActivity(packageManager)?.also {
-            startActivityForResult(PhoneIntent, PHONE_REQUEST_CODE)
+        val phoneIntent = Intent(Intent.ACTION_DIAL)
+        phoneIntent.resolveActivity(packageManager)?.also {
+            startActivityForResult(phoneIntent, PHONE_REQUEST_CODE)
+            call()
         }
     }
 
@@ -52,7 +48,7 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
         }
     }
 
-    private fun Call() {
+    private fun call() {
         val number: String = binding.numberPhone.text.toString()
 
         val isPhoneValid = Patterns.PHONE.matcher(number).matches()
@@ -61,8 +57,7 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
             toast("Enter valid phone number")
         } else {
             val callIntent = Intent(Intent.ACTION_DIAL).apply {
-                data = Uri.parse("tel:")
-                putExtra(Intent.EXTRA_PHONE_NUMBER, arrayOf(number))
+                data = Uri.parse("tel: $number")
             }
 
             if (callIntent.resolveActivity(packageManager) != null) {

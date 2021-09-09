@@ -25,13 +25,4 @@
         android:text="Позвонить"
         android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:id="@+id/ResultButton"
-        android:enabled="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Обработка результата"
-        android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>
