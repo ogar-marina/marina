@@ -51,12 +51,8 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
             val callIntent = Intent(Intent.ACTION_DIAL).apply {
                 data = Uri.parse("tel: $number")
             }
-
             if (callIntent.resolveActivity(packageManager) != null) {
-                val phoneIntent = Intent(Intent.ACTION_DIAL)
-                phoneIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(phoneIntent, PHONE_REQUEST_CODE)
-                }
+                    startActivityForResult(callIntent, PHONE_REQUEST_CODE)
             } else {
                 toast("No component to handle intent")
             }
