@@ -19,14 +19,6 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
         setContentView(binding.root)
 
         binding.ButtonPhone.setOnClickListener {
-            dispatchPhoneCallIntent()
-        }
-    }
-
-    private fun dispatchPhoneCallIntent() {
-        val phoneIntent = Intent(Intent.ACTION_DIAL)
-        phoneIntent.resolveActivity(packageManager)?.also {
-            startActivityForResult(phoneIntent, PHONE_REQUEST_CODE)
             call()
         }
     }
@@ -61,7 +53,10 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
             }
 
             if (callIntent.resolveActivity(packageManager) != null) {
-                startActivity(callIntent)
+                val phoneIntent = Intent(Intent.ACTION_DIAL)
+                phoneIntent.resolveActivity(packageManager)?.also {
+                    startActivityForResult(phoneIntent, PHONE_REQUEST_CODE)
+                }
             } else {
                 toast("No component to handle intent")
             }
