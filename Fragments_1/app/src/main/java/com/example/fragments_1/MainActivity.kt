@@ -1,10 +1,11 @@
 package com.example.fragments_1
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity(), Navigator {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -12,15 +13,15 @@ class MainActivity : AppCompatActivity(), Navigator {
         showLoginFragment()
     }
 
-    private fun showLoginFragment() {
+    override fun navigateTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, LoginFragment())
+            .replace(R.id.container, MainFragment())
             .commit()
     }
 
-    override fun navigateTo(fragment: Fragment) {
+    private fun showLoginFragment(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container2, MainFragment())
+            .replace(R.id.container, LoginFragment())
             .commit()
     }
 }
