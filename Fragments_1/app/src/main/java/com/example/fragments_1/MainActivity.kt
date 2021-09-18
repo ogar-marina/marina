@@ -10,18 +10,15 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        showLoginFragment()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, LoginFragment())
+            .commit()
     }
 
     override fun navigateTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, MainFragment())
-            .commit()
-    }
-
-    private fun showLoginFragment(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, LoginFragment())
             .commit()
     }
 }

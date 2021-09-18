@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 
 class ListFragment : Fragment(R.layout.fragment_list) {
 
-    private val itemSelectListener: ItemSelectListener?
-        get() = parentFragment?.let { it as? ItemSelectListener }
+    private val navigateToFragment: Navigator?
+        get() = parentFragment?.let { it as? Navigator }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         view.let { it as ViewGroup }
             .children
             .mapNotNull { it as? Button }
@@ -26,7 +25,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun onButtonClick(buttonText: String) {
-        itemSelectListener?.onItemSelected(buttonText)
+        navigateToFragment?.navigateTo(DetailFragment.newInstance(buttonText))
 
     }
 }
