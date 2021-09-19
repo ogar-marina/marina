@@ -8,15 +8,12 @@ class MainFragment : Fragment(R.layout.fragment_main), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        childFragmentManager.beginTransaction()
-            .replace(R.id.container2, ListFragment())
-            .addToBackStack(null)
-            .commit()
+        navigateTo(ListFragment())
     }
 
     override fun navigateTo(fragment: Fragment) {
         childFragmentManager.beginTransaction()
-            .replace(R.id.container2, DetailFragment())
+            .replace(R.id.container2, fragment)
             .commit()
     }
 }
