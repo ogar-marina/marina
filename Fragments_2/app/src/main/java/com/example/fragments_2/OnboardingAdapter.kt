@@ -14,12 +14,6 @@ class OnboardingAdapter(
 
     override fun createFragment(position: Int): Fragment {
         val screen:OnboardingScreen = screens[position]
-        return OnboardingFragment.newInstance(
-            textRes = screen.textRes,
-            titleRes = screen.titleRes,
-            articleRes = screen.articleRes,
-            bgColorRes = screen.bgColorRes,
-            drawableRes = screen.drawableRes
-        )
+        return OnboardingFragment.newInstance(screen)
     }
 }

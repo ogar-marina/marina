@@ -2,56 +2,55 @@ package com.example.fragments_2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_onboarding.*
+import java.util.Locale.filter
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var filtersForArticles: List<ArticleType>
+
     private val screens: List<OnboardingScreen> = listOf(
         OnboardingScreen(
-            textRes = R.string.onboarding_text_1,
+            textRes = arrayOf(ArticleType.SPORT),
             titleRes = R.string.onboarding_title_1,
             articleRes = R.string.onboarding_article_1,
-            bgColorRes = R.color.onboarding_color_1,
             drawableRes = R.drawable.onboarding_drawable_1
         ),
         OnboardingScreen(
-            textRes = R.string.onboarding_text_2,
+            textRes = arrayOf(ArticleType.BUSINESS),
             titleRes = R.string.onboarding_title_2,
             articleRes = R.string.onboarding_article_2,
-            bgColorRes = R.color.onboarding_color_2,
             drawableRes = R.drawable.onboarding_drawable_2
         ),
         OnboardingScreen(
-            textRes = R.string.onboarding_text_3,
+            textRes = arrayOf(ArticleType.HEALTH),
             titleRes = R.string.onboarding_title_3,
             articleRes = R.string.onboarding_article_3,
-            bgColorRes = R.color.onboarding_color_3,
             drawableRes = R.drawable.onboarding_drawable_3
         ),
         OnboardingScreen(
-            textRes = R.string.onboarding_text_1,
+            textRes = arrayOf(ArticleType.SPORT),
             titleRes = R.string.onboarding_title_4,
             articleRes = R.string.onboarding_article_4,
-            bgColorRes = R.color.onboarding_color_1,
             drawableRes = R.drawable.onboarding_drawable_1
         ),
         OnboardingScreen(
-            textRes = R.string.onboarding_text_2,
+            textRes = arrayOf(ArticleType.BUSINESS),
             titleRes = R.string.onboarding_title_5,
             articleRes = R.string.onboarding_article_5,
-            bgColorRes = R.color.onboarding_color_2,
             drawableRes = R.drawable.onboarding_drawable_2
         ),
         OnboardingScreen(
-            textRes = R.string.onboarding_text_3,
+            textRes = arrayOf(ArticleType.HEALTH),
             titleRes = R.string.onboarding_title_6,
             articleRes = R.string.onboarding_article_6,
-            bgColorRes = R.color.onboarding_color_3,
             drawableRes = R.drawable.onboarding_drawable_3
         )
     )
@@ -95,14 +94,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDialogWithSingleChoice() {
-        val typeArticle = arrayOf("Спорт", "Бизнес", "Здоровье")
+        val typeArticle = ArticleType.values().map { it.name }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle("Выберете тип статьи:")
-            .setItems(typeArticle) { _, which -> toast("Выбран тип: ${typeArticle[which]}") }
+            .setItems(typeArticle) { _, which -> getFilterArticles() }
             .show()
+        Log.d("filter article", "newList")
     }
 
-    private fun toast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun getFilterArticles() = screens.filter { articleScreen ->
+        arrayOf(ArticleType.values().map { it.name }.toTypedArray()).any {
+            it.contentEquals(filtersForArticles.toTypedArray())
+
+        }
     }
 }
+
+
+
