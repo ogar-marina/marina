@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-enum class ArticleType: Parcelable {
-    SPORT,
-    BUSINESS,
-    HEALTH
+enum class ArticleType (val nameId: Int): Parcelable {
+    SPORT(1),
+    BUSINESS(2),
+    HEALTH(3)
 }
