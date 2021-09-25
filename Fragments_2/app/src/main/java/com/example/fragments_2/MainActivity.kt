@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDialogWithSingleChoice() {
-        val typeArticle = ArticleType.values().map { it.nameId }.toTypedArray()
+        val typeArticle = ArticleType.values().map { it.nameType }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle("Выберете тип статьи:")
             .setItems(typeArticle) { _, which -> getFilterArticles() }
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getFilterArticles() = screens.filter { articleScreen ->
-        arrayOf(ArticleType.values().map { it.nameId }.toTypedArray()).any {
+        arrayOf(ArticleType.values().map { it.nameType }.toTypedArray()).any {
             it.contentEquals(filtersForArticles.toTypedArray())
 
         }
