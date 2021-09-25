@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var filtersForArticles: List<ArticleType>
-
     private val screens: List<OnboardingScreen> = listOf(
         OnboardingScreen(
             textRes = arrayOf(ArticleType.SPORT),
@@ -101,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getFilterArticles() = screens.filter { articleScreen ->
         arrayOf(ArticleType.values().map { it.nameType }.toTypedArray()).any {
+            val filtersForArticles : List<ArticleType> = mutableListOf()
             it.contentEquals(filtersForArticles.toTypedArray())
 
         }
