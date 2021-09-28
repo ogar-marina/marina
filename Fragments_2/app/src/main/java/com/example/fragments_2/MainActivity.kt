@@ -13,37 +13,37 @@ class MainActivity : AppCompatActivity() {
 
     private val screens: List<OnboardingScreen> = listOf(
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.SPORT),
+            type = ArticleType.SPORT,
             titleRes = R.string.onboarding_title_1,
             articleRes = R.string.onboarding_article_1,
             drawableRes = R.drawable.onboarding_drawable_1
         ),
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.BUSINESS),
+            type = ArticleType.BUSINESS,
             titleRes = R.string.onboarding_title_2,
             articleRes = R.string.onboarding_article_2,
             drawableRes = R.drawable.onboarding_drawable_2
         ),
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.HEALTH),
+            type = ArticleType.HEALTH,
             titleRes = R.string.onboarding_title_3,
             articleRes = R.string.onboarding_article_3,
             drawableRes = R.drawable.onboarding_drawable_3
         ),
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.SPORT),
+            type = ArticleType.SPORT,
             titleRes = R.string.onboarding_title_4,
             articleRes = R.string.onboarding_article_4,
             drawableRes = R.drawable.onboarding_drawable_1
         ),
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.BUSINESS),
+            type = ArticleType.BUSINESS,
             titleRes = R.string.onboarding_title_5,
             articleRes = R.string.onboarding_article_5,
             drawableRes = R.drawable.onboarding_drawable_2
         ),
         OnboardingScreen(
-            textRes = arrayOf(ArticleType.HEALTH),
+            type = ArticleType.HEALTH,
             titleRes = R.string.onboarding_title_6,
             articleRes = R.string.onboarding_article_6,
             drawableRes = R.drawable.onboarding_drawable_3
@@ -92,17 +92,18 @@ class MainActivity : AppCompatActivity() {
         val typeArticle = ArticleType.values().map { it.nameType }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle("Выберете тип статьи:")
-            .setItems(typeArticle) { _, which -> getFilterArticles() }
+            .setItems(typeArticle) { _, which -> filterArticles(ArticleType.values()[which]) }
             .show()
         Log.d("filter article", "newList")
     }
 
-    private fun getFilterArticles() = screens.filter { articleScreen ->
-        arrayOf(ArticleType.values().map { it.nameType }.toTypedArray()).any {
-            val filtersForArticles : List<ArticleType> = mutableListOf()
-            it.contentEquals(filtersForArticles.toTypedArray())
-
-        }
+    private fun filterArticles(type: ArticleType) {
+        val filteredScreens = screens.filter { it.type == type }
+        val adapter = OnboardingAdapter(filteredScreens, this)
+        viewPager.adapter = adapter
+        TabLayoutMediator(tabLayout,viewPager){tab,position->
+            tab.text = "Tab ${position + 1}"
+        }.attach()
     }
 }
 

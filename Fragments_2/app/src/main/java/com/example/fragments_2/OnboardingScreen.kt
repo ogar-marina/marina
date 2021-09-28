@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class OnboardingScreen(
-    val textRes: Array<ArticleType>,
+    val type: ArticleType,
     @StringRes val titleRes: Int,
     @StringRes val articleRes: Int,
     @DrawableRes val drawableRes: Int
