@@ -52,7 +52,7 @@ class PersonListFragment : Fragment(R.layout.fragment_user_list) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initList()
-        addFab.setOnClickListener { addUser() }
+        addFab.setOnClickListener { showDialogFragment() }
         personAdapter?.updatePersons(persons)
         personAdapter?.notifyDataSetChanged()
     }
@@ -74,14 +74,18 @@ class PersonListFragment : Fragment(R.layout.fragment_user_list) {
     private fun deletePerson(position: Int) {
 
         if (userList.isNotEmpty()) {
-            emptyListTextView.visibility = View.VISIBLE
+            emptyListTextView.visibility = View.GONE
             persons = persons.filterIndexed { index, user -> index != position }
             personAdapter?.updatePersons(persons)
             personAdapter?.notifyItemRemoved(position)
         } else {
-            emptyListTextView.visibility = View.GONE
+            emptyListTextView.visibility = View.VISIBLE
         }
+    }
 
+    private fun showDialogFragment() {
+        DialogFragment()
+            .show(childFragmentManager, "DialogTag")
     }
 
     private fun addUser() {
