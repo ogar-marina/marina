@@ -11,8 +11,10 @@ class DialogFragment: DialogFragment() {
         val newUser = arrayOf("User", "Developer")
         return AlertDialog.Builder(requireActivity())
             .setTitle("Добавить")
+            .setView(R.layout.add_user_dialog)
+            .setPositiveButton("Ok", { _, _ ->  })
+            .setNegativeButton("Cancle", { _, _ ->  })
             .setItems(newUser) { _, which -> }
             .create()
     }
-
 }

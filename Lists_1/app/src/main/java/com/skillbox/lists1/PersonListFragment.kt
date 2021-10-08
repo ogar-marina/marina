@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.fragment_user_list.*
 
 class PersonListFragment : Fragment(R.layout.fragment_user_list) {
 
+    private var dialog: AlertDialog? = null
+
     private var persons = listOf(
         Person.Developer(
             name = "Иван Петров",
@@ -88,11 +90,8 @@ class PersonListFragment : Fragment(R.layout.fragment_user_list) {
             .show(childFragmentManager, "DialogTag")
     }
 
-    private fun addUser() {
-        val newUser = persons.random()
-        persons = listOf(newUser) + persons
-        personAdapter?.updatePersons(persons)
-        personAdapter?.notifyItemInserted(0)
-        userList.scrollToPosition(0)
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
     }
 }
