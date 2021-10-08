@@ -14,7 +14,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="Имя"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/add_linkPhoto"
@@ -25,7 +26,7 @@
         android:layout_marginStart="16dp"
         android:gravity="start|center_vertical"
         android:hint="Ссылка на фотографию"
-        android:minHeight="48dp"/>
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/add_age"
@@ -37,7 +38,7 @@
         android:drawablePadding="32dp"
         android:gravity="start|center_vertical"
         android:hint="Возраст"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"/>
 
     <View
         android:layout_width="match_parent"
