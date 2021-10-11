@@ -7,9 +7,10 @@ import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_user_list.*
 
-class PersonListFragment : Fragment(R.layout.fragment_user_list) {
+class PersonListFragment : Fragment(R.layout.fragment_user_list), DataInterface {
 
     private var dialog: AlertDialog? = null
 
@@ -93,5 +94,13 @@ class PersonListFragment : Fragment(R.layout.fragment_user_list) {
     override fun onDestroy() {
         super.onDestroy()
         dialog?.dismiss()
+    }
+
+    override fun selectUsers(selectUser: List<Person>) {
+        initList()
+        persons = selectUser + persons
+        personAdapter?.updatePersons(persons)
+        personAdapter?.notifyItemRemoved(0)
+        userList.scrollToPosition(0)
     }
 }

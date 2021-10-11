@@ -6,6 +6,20 @@
     android:layout_marginTop="8dp"
     android:orientation="vertical">
 
+    <RadioButton
+        android:id="@+id/radioButtonUser"
+        android:text="User"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RadioButton
+        android:id="@+id/radioButtonDeveloper"
+        android:text="Developer"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/add_name"
         android:layout_width="match_parent"
@@ -40,10 +54,24 @@
         android:hint="Возраст"
         android:minHeight="48dp"/>
 
+    <EditText
+        android:id="@+id/add_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawablePadding="32dp"
+        android:gravity="start|center_vertical"
+        android:hint="Язык программирования"
+        android:visibility="invisible"
+        android:minHeight="48dp"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp" />
+
 
 </LinearLayout>
