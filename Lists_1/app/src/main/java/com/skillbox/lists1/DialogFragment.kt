@@ -3,6 +3,7 @@ package com.skillbox.lists1
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -12,12 +13,21 @@ class DialogFragment : DialogFragment() {
 
     private val selectUsers: DataInterface?
         get() = parentFragment?.let { it as? DataInterface }
-    private var add_language: EditText? = null
+    private var addLanguage: EditText? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.add_user_dialog, null)
+        val addName = dialogView.findViewById<EditText>(R.id.add_name)
+        val addLinkPhoto = dialogView.findViewById<EditText>(R.id.add_linkPhoto)
+        val addAge = dialogView.findViewById<EditText>(R.id.add_age)
+        addLanguage = dialogView.findViewById(R.id.add_language)
+        val radioButtonUser = dialogView.findViewById<RadioButton>(R.id.radioButtonUser)
+        val radioButtonDeveloper = dialogView.findViewById<RadioButton>(R.id.radioButtonDeveloper)
+
         var newUser: List<Person>
 
-        radioButtonUser?.setOnClickListener {
+        radioButtonUser.setOnClickListener {
             changeShowEdit(false)
         }
         radioButtonDeveloper.setOnClickListener {
@@ -27,24 +37,24 @@ class DialogFragment : DialogFragment() {
 
         return AlertDialog.Builder(requireActivity())
             .setTitle("Добавить")
-            .setView(R.layout.add_user_dialog)
+            .setView(dialogView)
             .setPositiveButton("OK") { _, _ ->
                 if (radioButtonUser.isChecked) {
 
                     newUser = listOf(
                         Person.User(
-                            add_name.text.toString(),
-                            add_linkPhoto.text.toString(),
-                            add_age.inputType
+                            addName.text.toString(),
+                            addLinkPhoto.text.toString(),
+                            addAge.text.toString().toInt()
                         )
                     )
                 } else {
                     newUser = listOf(
                         Person.Developer(
-                            add_name.text.toString(),
-                            add_linkPhoto.text.toString(),
-                            add_age.inputType,
-                            add_language?.text.toString()
+                            addName.text.toString(),
+                            addLinkPhoto.text.toString(),
+                            addAge.text.toString().toInt(),
+                            addLanguage?.text.toString()
                         )
                     )
                 }
@@ -55,7 +65,7 @@ class DialogFragment : DialogFragment() {
     }
 
     private fun changeShowEdit(showType: Boolean) {
-        add_language?.run { isVisible = showType }
+        addLanguage?.run { isVisible = showType }
     }
 
 }
