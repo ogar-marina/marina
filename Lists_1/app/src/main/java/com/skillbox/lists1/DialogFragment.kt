@@ -35,7 +35,7 @@ class DialogFragment : DialogFragment() {
         }
 
         return AlertDialog.Builder(requireActivity())
-            .setTitle("Добавить")
+            .setTitle("Add")
             .setView(dialogView)
             .setPositiveButton("OK") { _, _ ->
                 if (radioButtonUser.isChecked) {
