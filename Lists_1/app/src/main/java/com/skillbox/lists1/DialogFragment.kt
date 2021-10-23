@@ -7,7 +7,6 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.add_user_dialog.*
 
 class DialogFragment : DialogFragment() {
 
