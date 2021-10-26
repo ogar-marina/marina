@@ -1,5 +1,5 @@
 package com.example.classesandinheritance
 
-class FreeRoom(title1: String = "Свободная комната", area: Double) : Room(area) {
+class FreeRoom(title1: String = "Free room", area: Double) : Room(area) {
     override var title: String = title1
 }
