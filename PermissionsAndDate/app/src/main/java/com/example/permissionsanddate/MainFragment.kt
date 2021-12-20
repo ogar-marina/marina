@@ -27,8 +27,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val locationList = mutableListOf<LocationInfo>()
 
-    private var adapter = LocationAdapter()
-    private var locationAdapter: LocationAdapter? = null
+    private var adapter: LocationAdapter? = null
     private var selectedMessageInstant: org.threeten.bp.Instant? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -36,12 +35,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         getCurrentLocationButton.setOnClickListener {
             showLocationInfo()
         }
-        initTimePicker()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        locationAdapter = null
+        initList()
     }
 
     private fun showLocationInfo() {
@@ -66,7 +60,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         it.longitude
                     )
                     locationList.add(locationInfo)
-                    adapter.setData(locationList)
                 } ?: toast("Локация отсутствует")
             }
             .addOnCanceledListener {
@@ -76,47 +69,55 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 toast("Запрос локации завершился неудачно")
             }
     }
-        private fun initTimePicker() {
 
+    private fun initList() {
+        adapter = LocationAdapter { position -> initTimePicker(position) }
+        adapter?.setData(locationList)
+        locationListView.layoutManager = LinearLayoutManager(requireContext())
+    }
 
-            val currentDateTime = LocalDateTime.now()
+    private fun initTimePicker(position: Int) {
+        timePicker()
+        adapter?.setData(locationList)
+        adapter?.notifyItemRemoved(position)
+    }
 
-            locationListView.setOnClickListener {
-                DatePickerDialog(
+    private fun timePicker() {
+        val currentDateTime = LocalDateTime.now()
+
+        DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                TimePickerDialog(
                     requireContext(),
-                    { _, year, month, dayOfMonth ->
-                        TimePickerDialog(
-                            requireContext(),
-                            { _, hourOfDay, minute ->
-                                val zonedDateTime =
-                                    LocalDateTime.of(year, month + 1, dayOfMonth, hourOfDay, minute)
-                                        .atZone(ZoneId.systemDefault())
+                    { _, hourOfDay, minute ->
+                        val zonedDateTime =
+                            LocalDateTime.of(year, month + 1, dayOfMonth, hourOfDay, minute)
+                                .atZone(ZoneId.systemDefault())
 
-                                toast("Выбрано время: $zonedDateTime")
-                                selectedMessageInstant = zonedDateTime.toInstant()
-                            },
-                            currentDateTime.hour,
-                            currentDateTime.minute,
-                            true
-                        )
-                            .show()
+                        toast("Выбрано время: $zonedDateTime")
+                        selectedMessageInstant = zonedDateTime.toInstant()
                     },
-                    currentDateTime.year,
-                    currentDateTime.month.value - 1,
-                    currentDateTime.dayOfMonth
+                    currentDateTime.hour,
+                    currentDateTime.minute,
+                    true
                 )
                     .show()
-            }
-        }
-
-
-        private fun toast(text: String) {
-            Toast.makeText(requireContext(), text, LENGTH_SHORT).show()
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            locationListView.layoutManager = LinearLayoutManager(requireContext())
-            locationListView.adapter = adapter
-        }
+            },
+            currentDateTime.year,
+            currentDateTime.month.value - 1,
+            currentDateTime.dayOfMonth
+        )
+            .show()
     }
+
+    private fun toast(text: String) {
+        Toast.makeText(requireContext(), text, LENGTH_SHORT).show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        locationListView.layoutManager = LinearLayoutManager(requireContext())
+        locationListView.adapter = adapter
+    }
+}
