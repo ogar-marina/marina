@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
@@ -17,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.view_location_info.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import java.time.Instant
@@ -60,6 +57,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         it.longitude
                     )
                     locationList.add(locationInfo)
+                    adapter?.setData(locationList)
                 } ?: toast("Локация отсутствует")
             }
             .addOnCanceledListener {
@@ -74,6 +72,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         adapter = LocationAdapter { position -> initTimePicker(position) }
         adapter?.setData(locationList)
         locationListView.layoutManager = LinearLayoutManager(requireContext())
+        locationListView.adapter = adapter
     }
 
     private fun initTimePicker(position: Int) {
@@ -121,3 +120,4 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         locationListView.adapter = adapter
     }
 }
+
