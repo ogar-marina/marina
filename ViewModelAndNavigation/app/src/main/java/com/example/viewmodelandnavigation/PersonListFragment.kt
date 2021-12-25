@@ -33,7 +33,7 @@ class PersonListFragment : Fragment(R.layout.fragment_user_list) {
             val action = PersonListFragmentDirections.actionPersonListFragmentToDetailsFragment(id)
             findNavController().navigate(action)
         },
-        { position -> deletePerson(id.toInt()) })
+        { position -> deletePerson(position) })
 
         with(userList) {
             adapter = personAdapter
