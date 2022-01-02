@@ -3,11 +3,7 @@ package com.skillbox.multithreading
 import android.util.Log
 import androidx.fragment.app.Fragment
 
-class DeadlockFragment: Fragment() {
-
-    private var i = 0
-    private val lock1 = Any()
-    private val lock2 = Any()
+class DeadlockFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
@@ -16,29 +12,11 @@ class DeadlockFragment: Fragment() {
         val friend2 = Person("Петя")
 
         val thread1 = Thread {
-            Log.d("Deadlock", "Start1")
-
-            (0..1000000).forEach {
-                synchronized(lock1) {
-                    synchronized(lock2) {
-                        i++
-                    }
-                }
-            }
-            Log.d("Deadlock", "End1")
+            friend1.throwBallTo(friend2)
         }
 
         val thread2 = Thread {
-            Log.d("Deadlock", "Start2")
-            (0..1000000).forEach {
-                synchronized(lock2) {
-                    synchronized(lock1) {
-                        i++
-                    }
-                }
-            }
-
-            Log.d("Deadlock", "End2")
+            friend2.throwBallTo(friend1)
         }
 
         thread1.start()
