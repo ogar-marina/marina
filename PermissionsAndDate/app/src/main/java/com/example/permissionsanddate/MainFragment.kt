@@ -64,6 +64,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 toast("Запрос локации был отменен")
             }
             .addOnFailureListener {
+                val locationInfo = LocationInfo(
+                    50.0,
+                    50.0
+                )
+                locationList.add(locationInfo)
+                adapter?.setData(locationList)
                 toast("Запрос локации завершился неудачно")
             }
     }
@@ -95,6 +101,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                 .atZone(ZoneId.systemDefault())
 
                         toast("Выбрано время: $zonedDateTime")
+                        adapter?.setData(locationList)
                         selectedMessageInstant = zonedDateTime.toInstant()
                     },
                     currentDateTime.hour,

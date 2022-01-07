@@ -1,10 +1,13 @@
 package com.example.permissionsanddate
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_location_info.view.*
+import org.threeten.bp.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -51,8 +54,38 @@ class LocationAdapter(
 
         init {
             item.setOnClickListener {
-                onItemClick(adapterPosition)
+                timePicker()
             }
+        }
+
+        private fun timePicker() {
+            val currentDateTime = LocalDateTime.now()
+
+            DatePickerDialog(
+                itemView.context,
+                { _, year, month, dayOfMonth ->
+                    TimePickerDialog(
+                        itemView.context,
+                        { _, hourOfDay, minute ->
+                            val zonedDateTime =
+                                LocalDateTime.of(year, month + 1, dayOfMonth, hourOfDay, minute)
+                                    .atZone(org.threeten.bp.ZoneId.systemDefault())
+                                    .toOffsetDateTime()
+
+                            itemView.time.text = org.threeten.bp.format.DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy").format(zonedDateTime)
+
+                        },
+                        currentDateTime.hour,
+                        currentDateTime.minute,
+                        true
+                    )
+                        .show()
+                },
+                currentDateTime.year,
+                currentDateTime.month.value - 1,
+                currentDateTime.dayOfMonth
+            )
+                .show()
         }
     }
 }
