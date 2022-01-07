@@ -40,7 +40,7 @@
         android:label="RaceConditionFragment" />
     <fragment
         android:id="@+id/threadingFragment"
-        android:name="com.skillbox.multithreading.threading.ThreadingFragment"
+        android:name="com.skillbox.multithreading.threading.view.ThreadingFragment"
         android:label="ThreadingFragment"
         tools:layout="@layout/fragment_threading" />
     <fragment

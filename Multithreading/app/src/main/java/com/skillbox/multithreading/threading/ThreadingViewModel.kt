@@ -1,9 +1,12 @@
 package com.skillbox.multithreading.threading
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.skillbox.multithreading.networking.Movie
 
 class ThreadingViewModel : ViewModel() {
 
@@ -34,20 +37,22 @@ class ThreadingViewModel : ViewModel() {
     )
 
     private val timeLiveData = MutableLiveData<Long>()
-    private val moviesLiveData = MutableLiveData<String>()
+    private val moviesLiveData = MutableLiveData<List<Movie>>()
+
+    private val handler = Handler(Looper.getMainLooper())
 
     val time: LiveData<Long?>
         get() = timeLiveData
 
-    val movies: LiveData<String?>
+    val movies: LiveData<List<Movie>>
         get() = moviesLiveData
 
     fun requestMovies() {
         Log.d("ThreadTest", "requestMovies start on ${Thread.currentThread().name}")
-        userRepository.fetchMovies(movieIds) { movies, fetchTime ->
-            Log.d("ThreadTest", "requestMovies fetched on ${Thread.currentThread().name}")
-            timeLiveData.postValue(fetchTime)
-            moviesLiveData.postValue(movies)
+        userRepository.fetchMovies(movieIds) { movies ->
+            handler.post {
+                moviesLiveData.value = movies
+            }
         }
         Log.d("ThreadTest", "requestMovies end on ${Thread.currentThread().name}")
 

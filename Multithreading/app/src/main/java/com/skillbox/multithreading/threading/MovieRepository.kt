@@ -8,15 +8,16 @@ import java.util.*
 class MovieRepository {
 
     fun getMovieById(movieId: String): Movie? {
-        return Network.api().getMovieById(movieId, Network.MOVIE_API_KEY).execute()
+        return Network.api().getMovieById(movieId).execute()
             .body()
     }
 
     fun fetchMovies(
         movieIds: List<String>,
-        onMoviesFetched: (movies: String, fetchTime: Long) -> Unit
+        onMoviesFetched: (List<Movie>) -> Unit
     ) {
         Log.d("ThreadTest", "fetchMovies start on ${Thread.currentThread().name}")
+
         Thread {
 
             val startTime = System.currentTimeMillis()
@@ -36,10 +37,11 @@ class MovieRepository {
 
             val requestTime = System.currentTimeMillis() - startTime
 
-            val joinedMovies = allMovies.joinToString("\n")
+//            val joinedMovies = allMovies.joinToString("\n")
 
-            onMoviesFetched(joinedMovies, requestTime)
+            onMoviesFetched(allMovies)
         }.start()
+
         Log.d("ThreadTest", "fetchMovies end on ${Thread.currentThread().name}")
     }
 }
