@@ -40,4 +40,28 @@ class DeadlockFragment : Fragment() {
         }
 
     }
+
+    class Account {
+        var balance = 0
+
+        fun withDraw(amount: Int) {
+            balance -= amount
+        }
+
+        fun deposit(amount: Int) {
+            balance += amount
+        }
+
+        fun transfer(to: Account, amount: Int) {
+            synchronized(this) {
+                synchronized(to) {
+                    this.withDraw(50)
+                    to.deposit(50)
+
+                    //
+                    println("Bla-bla")
+                }
+            }
+        }
+    }
 }

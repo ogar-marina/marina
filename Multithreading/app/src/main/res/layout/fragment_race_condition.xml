@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/kol_n"
+        android:id="@+id/amountOfN"
         android:layout_margin="8dp"
         android:hint="Количество потоков N"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:inputType="number"/>
 
     <EditText
-        android:id="@+id/per_m"
+        android:id="@+id/amountOfM"
         android:layout_margin="8dp"
         android:hint="Переменная M"
         android:layout_width="match_parent"
@@ -22,16 +22,21 @@
         android:inputType="number"/>
 
     <Button
-        android:id="@+id/synch_no"
+        android:id="@+id/withSync"
         android:layout_margin="8dp"
         android:text="Без синхронизации крит. секции"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/synch"
+        android:id="@+id/withoutSync"
         android:text="Синхронизация крит. секции"
         android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
