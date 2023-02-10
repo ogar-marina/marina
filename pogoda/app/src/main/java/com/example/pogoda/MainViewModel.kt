@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
 
     private val api: WeatherApi = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://raw.githubusercontent.com/iandreyshev/weather/main/")
+        .baseUrl("https://raw.githubusercontent.com/ogar-marina/marina/master/pogoda/")
         .build()
         .create(WeatherApi::class.java)
 
